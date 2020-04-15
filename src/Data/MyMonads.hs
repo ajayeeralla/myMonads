@@ -1,6 +1,18 @@
---{-# LANGUAGE DeriveAnyClass #-}
+--{-# LANGUAGE Derive #-}
 --{-# LANGUAGE DeriveFunctor #-}
-module Monads
+{-# LANGUAGE ConstraintKinds       #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE PolyKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE GADTs                 #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeOperators         #-}
+
+module Data.MyMonads
   ( MyMaybe (..)
   )
 where
@@ -38,24 +50,24 @@ instance Monad MyMaybe where
 data IList n a where
   Cons :: a -> IList n a -> IList (S n) a
   Nil :: IList Z a
-  deriving (Eq, Show)
+
 
 
 length :: IList n a -> Nat
 length Nil = 0
-length (Cons x xs) =  S (Data.IList.length xs)
+length (Cons x xs) =  S (Data.MyMonads.length xs)
 
 toList :: IList n a -> [a]
 toList Nil = []
 toList (Cons x xs) = x:toList xs
 
 
-iMap :: (Eq a, Eq b) => (a -> b) -> IList n a -> IList n b
+iMap :: (a -> b) -> IList n a -> IList n b
 iMap f Nil = Nil
-iMap f (x:xs) = Cons (f x) (iMap f xs)
+iMap f (Cons x xs) = Cons (f x) (iMap f xs)
 
-instance Functor (IList n a) where
-  fmap f Nil = Nil
-  fmap f (Cons x xs) = Cons (f x) (fmap f xs)
+instance Functor (IList n) where
+  fmap = iMap
+
 
 -- | Monad MyState
