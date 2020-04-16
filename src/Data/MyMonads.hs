@@ -8,8 +8,6 @@ import Data.MyTypes
 import Data.MyFunctors
 import Data.MyApplicatives
 
-
-
 -- | Define Monad instance for MyMaybe
 
 instance Monad MyMaybe where
