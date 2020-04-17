@@ -23,4 +23,18 @@ main = do
            z <- [4, 5, 6]
            return $ y * z
 
-   putStrLn $ show x
+       z :: Maybe Int
+       z = Just 20
+
+       g :: Int -> Maybe Int
+       g x = Just $ x + 1
+
+       res :: Maybe Int
+       res = do
+           x <- z
+           g x
+
+   --putStrLn $ show x
+   print x
+   print c
+   print res

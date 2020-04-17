@@ -29,3 +29,7 @@ instance Functor (MyEither a b) where
   fmap g (MyLeft x) = MyLeft x
   fmap g (Middle x) = Middle x
   fmap g (MyRight x) = MyRight (g x)
+
+instance Functor (MyState s) where
+  --fmap :: (a-> b) -> MyState s a -> MyState s b
+  fmap g (MyState h) = MyState (\ s0 -> (g (fst (h s0)), snd (h s0)))

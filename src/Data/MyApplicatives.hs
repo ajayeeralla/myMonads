@@ -44,3 +44,10 @@ instance Applicative (MyEither e d) where
    MyLeft e <*> _ = MyLeft e
    Middle d <*> _ = Middle d
    MyRight f <*> r = fmap f r
+
+-- | MyState instance
+instance Applicative (MyState s) where
+   -- pure :: a -> (MyState s a)
+   pure x = MyState (\s -> (x,s))
+   -- <*> :: (MyState s (a -> b)) -> (MyState s a) -> (MyState s b)
+   MyState g <*> MyState h = MyState (\s0 -> (fst (g s0) (fst (h s0)), snd (h s0)))
