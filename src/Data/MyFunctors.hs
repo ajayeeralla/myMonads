@@ -38,3 +38,7 @@ instance Functor (MyState s) where
 instance Functor (MyWriter w) where
   fmap g (MyWriter x) = MyWriter $ let (a0, w0) = x
                                    in (g a0, w0)
+
+instance Functor (MyReader e) where
+  fmap g (MyReader h) = MyReader $ \e0 -> let a0 = h e0
+                                          in g a0

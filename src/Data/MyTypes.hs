@@ -14,9 +14,10 @@ module Data.MyTypes
   ( MyMaybe (..)
   , IList (..)
   , iMap
-  , MyEither(..)
+  , MyEither (..)
   , MyState (..)
   , MyWriter (..)
+  , MyReader (..)
   )
 where
 import Data.Nat
@@ -68,6 +69,9 @@ data MyEither a b c = MyLeft a | Middle b | MyRight c
 
 -- | MyState
 newtype MyState s a = MyState { runMyState :: s -> (a,s) }
+
+-- | MyReader
+newtype MyReader e a = MyReader { runMyReader :: e -> a }
 
 -- | MyWriter
 newtype MyWriter w a = MyWriter {runMyWriter :: (a, w)}

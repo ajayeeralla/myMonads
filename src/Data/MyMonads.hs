@@ -44,4 +44,10 @@ instance Monad (MyState s) where
 -- | Monad instance for MyMonad
 instance Monoid w => Monad (MyWriter w) where
   return x = MyWriter (x, mempty)
-  MyWriter (a0, w0) >>= h =  h a0
+  MyWriter (a0, w0) >>= h = h a0
+
+instance Monad (MyReader e) where
+  return x = MyReader (\_ -> x)
+  MyReader g >>= h = MyReader (\e0 -> let a0 = g e0
+                                          MyReader f = h a0
+                                        in f e0)

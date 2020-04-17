@@ -53,6 +53,10 @@ instance Applicative (MyState s) where
    MyState g <*> MyState h = MyState $ \s0 -> let (a0, s1) = h s0
                                                   (f, s2) = g s0
                                                in (f a0, s1)
+-- | MyReader instance
+instance Applicative (MyReader e) where
+   pure x = MyReader (\_ -> x)
+   MyReader g <*> MyReader h = MyReader (\x -> g x (h x))
 
 -- | MyWriter instance
 
