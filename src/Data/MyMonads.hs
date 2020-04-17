@@ -41,3 +41,7 @@ instance Monad (MyState s) where
   MyState g >>= h = MyState $ \s0 -> let (a0, s1) = g s0
                                          MyState f = h a0
                                      in f s1
+-- | Monad instance for MyMonad
+instance Monoid w => Monad (MyWriter w) where
+  return x = MyWriter (x, mempty)
+  MyWriter (a0, w0) >>= h =  h a0

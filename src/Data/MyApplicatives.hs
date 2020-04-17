@@ -53,3 +53,11 @@ instance Applicative (MyState s) where
    MyState g <*> MyState h = MyState $ \s0 -> let (a0, s1) = h s0
                                                   (f, s2) = g s0
                                                in (f a0, s1)
+
+-- | MyWriter instance
+
+instance (Monoid w) => Applicative (MyWriter w) where
+   pure x = MyWriter (x, mempty)
+   MyWriter g <*> MyWriter h = MyWriter $ let (a0, w0) = h
+                                              (f, _) = g
+                                          in (f a0, w0)

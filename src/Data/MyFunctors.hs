@@ -34,3 +34,7 @@ instance Functor (MyState s) where
   --fmap :: (a-> b) -> MyState s a -> MyState s b
   fmap g (MyState h) = MyState $ \s0 -> let (a0, s1)= h s0
                                          in  (g a0, s1)
+
+instance Functor (MyWriter w) where
+  fmap g (MyWriter x) = MyWriter $ let (a0, w0) = x
+                                   in (g a0, w0)
