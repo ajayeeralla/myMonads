@@ -32,3 +32,12 @@ instance Monad (MyEither e d) where
   MyLeft x >>= f = MyLeft x
   Middle x >>= f = Middle x
   MyRight x >>= f =  f x
+
+-- | Monad instance for MyState
+instance Monad (MyState s) where
+  --return :: a -> MyState s a
+  return x = MyState (\s0 -> (x, s0))
+  --(>>=)  :: MyState s a -> (a -> MyState s b) -> MyState s b
+  MyState g >>= h = MyState $ \s0 -> let (a0, s1) = g s0
+                                         MyState f = h a0
+                                     in f s1

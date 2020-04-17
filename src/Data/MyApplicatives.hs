@@ -50,4 +50,6 @@ instance Applicative (MyState s) where
    -- pure :: a -> (MyState s a)
    pure x = MyState (\s -> (x,s))
    -- <*> :: (MyState s (a -> b)) -> (MyState s a) -> (MyState s b)
-   MyState g <*> MyState h = MyState (\s0 -> (fst (g s0) (fst (h s0)), snd (h s0)))
+   MyState g <*> MyState h = MyState $ \s0 -> let (a0, s1) = h s0
+                                                  (f, s2) = g s0
+                                               in (f a0, s1)

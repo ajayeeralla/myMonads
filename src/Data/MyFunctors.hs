@@ -32,4 +32,5 @@ instance Functor (MyEither a b) where
 
 instance Functor (MyState s) where
   --fmap :: (a-> b) -> MyState s a -> MyState s b
-  fmap g (MyState h) = MyState (\ s0 -> (g (fst (h s0)), snd (h s0)))
+  fmap g (MyState h) = MyState $ \s0 -> let (a0, s1)= h s0
+                                         in  (g a0, s1)
