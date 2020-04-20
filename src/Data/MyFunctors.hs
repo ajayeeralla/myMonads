@@ -46,6 +46,9 @@ instance Functor (MyReader e) where
 
 instance Functor m => Functor (MyMaybeT m) where
   --fmap :: (a->b) -> MyMaybeT m a -> MyMaybeT m b
-  -- fmapg :: (a->b) ->  m (MyMaybe a) -> m (MyMaybe b)
+  --from functor m, we have that
+  --fmap :: (a -> b) -> m a -> m b
+  --fmap :: (a -> b) -> (MyMaybe a) -> (MyMaybe b)
+  -- fmapg :: (MyMaybe a) -> (MyMaybe b) ->  m (MyMaybe a) -> m (MyMaybe b)
   --fmaph :: (m (MyMaybe a) -> m (MyMaybe b)) -> m (MyMaybe a) -> m (MyMaybe b)
   fmap g (MyMaybeT h) = MyMaybeT (fmap (fmap g) h)

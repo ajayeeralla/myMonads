@@ -6,6 +6,7 @@ module Data.MyApplicatives where
 import Data.Nat
 import Data.MyTypes
 import Data.MyFunctors
+import Control.Monad (liftM,ap)
 
 -- | Applicative Class
 {-class (Functor f) => Applicative f where
@@ -65,3 +66,17 @@ instance (Monoid w) => Applicative (MyWriter w) where
    MyWriter g <*> MyWriter h = MyWriter $ let (a0, w0) = h
                                               (f, _) = g
                                           in (f a0, w0)
+instance Monad m => Applicative (MyMaybeT m) where
+   --pure :: a -> MyMaybeT m a
+   -- Since m is monad,
+   pure = MyMaybeT . return . Only
+   -- <*> :: (MyMaybeT m (a -> b)) -> (MyMaybeT m a) -> (MyMaybeT m b)
+   mg <*> mh = MyMaybeT $ do
+         mb_g <- runMyMaybeT mg
+         case mb_g of
+            Empty -> return Empty
+            Only g -> do
+               mb_x <- runMyMaybeT mh
+               case mb_x of
+                  Empty -> return Empty
+                  Only x -> return (Only (g x))

@@ -8,6 +8,7 @@ import Data.MyTypes
 import Data.MyFunctors
 import Data.MyApplicatives
 
+
 -- | Define Monad instance for MyMaybe
 instance Monad MyMaybe where
   return  = Only
@@ -51,3 +52,10 @@ instance Monad (MyReader e) where
   MyReader g >>= h = MyReader (\e0 -> let a0 = g e0
                                           MyReader f = h a0
                                         in f e0)
+instance Monad m => Monad (MyMaybeT m) where
+  return = MyMaybeT . return . Only
+  mx >>= g = MyMaybeT $ do
+    v <- runMyMaybeT mx
+    case v of
+      Empty -> return Empty
+      Only x -> runMyMaybeT (g x)
