@@ -6,6 +6,7 @@ import Data.MyTypes
 
 -- | Define Functor instance for MyMaybe
 instance Functor MyMaybe where
+  --fmap :: (a-> b) -> MyMaybe a -> MyMaybe b
   fmap _ Empty = Empty
   fmap f (Only x) = Only (f x)
 
@@ -42,3 +43,9 @@ instance Functor (MyWriter w) where
 instance Functor (MyReader e) where
   fmap g (MyReader h) = MyReader $ \e0 -> let a0 = h e0
                                           in g a0
+
+instance Functor m => Functor (MyMaybeT m) where
+  --fmap :: (a->b) -> MyMaybeT m a -> MyMaybeT m b
+  -- fmapg :: (a->b) ->  m (MyMaybe a) -> m (MyMaybe b)
+  --fmaph :: (m (MyMaybe a) -> m (MyMaybe b)) -> m (MyMaybe a) -> m (MyMaybe b)
+  fmap g (MyMaybeT h) = MyMaybeT (fmap (fmap g) h)

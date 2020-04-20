@@ -18,6 +18,7 @@ module Data.MyTypes
   , MyState (..)
   , MyWriter (..)
   , MyReader (..)
+  , MyMaybeT (..)
   )
 where
 import Data.Nat
@@ -74,4 +75,7 @@ newtype MyState s a = MyState { runMyState :: s -> (a,s) }
 newtype MyReader e a = MyReader { runMyReader :: e -> a }
 
 -- | MyWriter
-newtype MyWriter w a = MyWriter {runMyWriter :: (a, w)}
+newtype MyWriter w a = MyWriter { runMyWriter :: (a, w) }
+
+-- | Types related to transformers
+newtype MyMaybeT m a = MyMaybeT { runMyMaybeT :: m (MyMaybe a) }
