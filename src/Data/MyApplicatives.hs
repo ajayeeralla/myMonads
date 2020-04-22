@@ -46,6 +46,13 @@ instance Applicative (MyEither e d) where
    Middle d <*> _ = Middle d
    MyRight f <*> r = fmap f r
 
+-- | MyError instance
+instance Applicative (MyError e d) where
+   pure = MyError runMyError . MyRight
+   MyError (MyLeft e) <*> _ = MyError (MyLeft e)
+   MyError (Middle d) <*> _ = MyError (Middle d)
+   MyError (MyRight f) <*> r = MyError (fmap f r)
+
 -- | MyState instance
 instance Applicative (MyState s) where
    -- pure :: a -> (MyState s a)

@@ -44,6 +44,12 @@ instance Functor (MyReader e) where
   fmap g (MyReader h) = MyReader $ \e0 -> let a0 = h e0
                                           in g a0
 
+instance Functor (MyError e b) where
+  --fmap :: (a->b) -> MyError a b a -> MyError a b b
+  fmap g (MyError (MyLeft x)) = MyError (MyLeft x)
+  fmap g (MyError (Middle x)) = MyError (Middle x)
+  fmap g (MyError (MyRight x)) = MyError (MyRight (g x))
+
 instance Functor m => Functor (MyMaybeT m) where
   --fmap :: (a->b) -> MyMaybeT m a -> MyMaybeT m b
   --from functor m, we have that

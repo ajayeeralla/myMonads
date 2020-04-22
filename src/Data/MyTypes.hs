@@ -18,7 +18,12 @@ module Data.MyTypes
   , MyState (..)
   , MyWriter (..)
   , MyReader (..)
+  , MyError (..)
   , MyMaybeT (..)
+  , MyErrorT (..)
+  , MyStateT (..)
+  , MyReaderT (..)
+  , MyWriterT (..)
   )
 where
 import Data.Nat
@@ -77,5 +82,20 @@ newtype MyReader e a = MyReader { runMyReader :: e -> a }
 -- | MyWriter
 newtype MyWriter w a = MyWriter { runMyWriter :: (a, w) }
 
+-- | MyError
+newtype MyError e a c = MyError { runMyError :: MyEither e a c}
+
 -- | Types related to transformers
 newtype MyMaybeT m a = MyMaybeT { runMyMaybeT :: m (MyMaybe a) }
+
+-- | MyWriterT
+newtype MyWriterT w m a = MyWriterT { runMyWriterT :: m (a, w) }
+
+-- | MyReaderT
+newtype MyReaderT e m a = MyReaderT { runMyReaderT :: e -> m a }
+
+-- | MyStateT
+newtype MyStateT s m a = MyStateT { runMyStateT :: s -> m (a, s) }
+
+-- | MyErrorT
+newtype  MyErrorT e a m c = MyErrorT { runMyErrorT :: m (MyEither e a c) }
