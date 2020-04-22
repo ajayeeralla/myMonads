@@ -47,6 +47,11 @@ instance Monoid w => Monad (MyWriter w) where
   return x = MyWriter (x, mempty)
   MyWriter (a0, w0) >>= h = h a0
 
+-- | Monad instance MyError
+instance Monad (MyError e a) where
+  return x = MyError (MyRight x)
+  MyError (MyRight x) >>= f = f x
+
 instance Monad (MyReader e) where
   return x = MyReader (\_ -> x)
   MyReader g >>= h = MyReader (\e0 -> let a0 = g e0
