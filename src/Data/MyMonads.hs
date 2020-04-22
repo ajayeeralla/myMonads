@@ -64,3 +64,9 @@ instance Monad m => Monad (MyMaybeT m) where
     case v of
       Empty -> return Empty
       Only x -> runMyMaybeT (g x)
+
+instance Monad m => Monad (MyStateT s m) where
+  return a = MyStateT $ \s -> return (a, s)
+  m >>= k = MyStateT $ \s -> do
+          (a, s') <- runMyStateT m s
+          runMyStateT (k a) s'

@@ -108,6 +108,12 @@ instance Applicative m => Applicative (MyReaderT e m) where
    pure x = MyReaderT (\_ -> pure x)
    g <*> h = MyReaderT $ \e0 -> runMyReaderT g e0 <*> runMyReaderT h e0
 
-instance Monoid m => Applicative (MyWriterT w m) where
-   pure x = MyWriterT (pure (x, mempty))
-   MyWriter g <*> MyWriter h = MyWriterT $ (\w0 -> runMyWriterT g w0 <*> runMyWriterT h wo)
+{-instance (Monoid w, Applicative m) => Applicative (MyWriterT w m) where
+   pure x = MyWriterT $ (pure (x, mempty))
+   f <*> v = MyWriterT $ (runMyWriterT f) <*> (runMyReaderT v) -}
+instance (Functor m, Monad m) => Applicative (MyStateT s m) where
+    pure a = MyStateT $ \ s -> return (a, s)
+    MyStateT mf <*> MyStateT mx = MyStateT $ \s -> do
+        (f, s') <- mf s
+        (x, s'') <- mx s'
+        return (f x, s'')
