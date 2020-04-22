@@ -58,3 +58,20 @@ instance Functor m => Functor (MyMaybeT m) where
   -- fmapg :: (MyMaybe a) -> (MyMaybe b) ->  m (MyMaybe a) -> m (MyMaybe b)
   --fmaph :: (m (MyMaybe a) -> m (MyMaybe b)) -> m (MyMaybe a) -> m (MyMaybe b)
   fmap g (MyMaybeT h) = MyMaybeT (fmap (fmap g) h)
+
+-- | Functor MyErrorT
+instance Functor m => Functor (MyErrorT e b m) where
+  fmap g (MyErrorT h) = MyErrorT (fmap (fmap g) h)
+
+-- | Functor MyReaderT
+instance Functor m => Functor (MyReaderT e m) where
+-- | fmap :: (a -> b) -> (MyReaderT e m a) -> (MyReader e m b)
+  fmap f x = MyReaderT $ runMyReaderT (fmap f x)
+
+-- | Functor MyWriterT
+instance Functor m => Functor (MyWriterT w m) where
+  fmap f x = MyWriterT $ runMyWriterT (fmap f x)
+
+-- | Functor MyStateT
+instance Functor m => Functor (MyStateT s m) where
+  fmap f x = MyStateT $ runMyStateT (fmap f x)

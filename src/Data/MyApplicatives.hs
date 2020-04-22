@@ -87,3 +87,27 @@ instance Monad m => Applicative (MyMaybeT m) where
                case mb_x of
                   Empty -> return Empty
                   Only x -> return (Only (g x))
+
+instance Monad m => Applicative (MyErrorT e b m) where
+   pure = MyErrorT . return . MyRight
+   mg <*> mh = MyErrorT $ do
+      mb_g <- runMyErrorT mg
+      case mb_g of
+         MyLeft x -> return (MyLeft x)
+         Middle x -> return (Middle x)
+         MyRight g -> do
+            mb_x <- runMyErrorT mh
+            case mb_x of
+               MyRight x -> return (MyRight (g x))
+               MyLeft x -> return (MyLeft x)
+               Middle x -> return (Middle x)
+
+instance Applicative m => Applicative (MyReaderT e m) where
+   -- Given pure :: a -> m a
+   -- pure :: a -> MyReader e m a
+   pure x = MyReaderT (\_ -> pure x)
+   g <*> h = MyReaderT $ \e0 -> runMyReaderT g e0 <*> runMyReaderT h e0
+
+instance Monoid m => Applicative (MyWriterT w m) where
+   pure x = MyWriterT (pure (x, mempty))
+   MyWriter g <*> MyWriter h = MyWriterT $ (\w0 -> runMyWriterT g w0 <*> runMyWriterT h wo)
