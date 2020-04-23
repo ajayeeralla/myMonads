@@ -51,12 +51,13 @@ executable CollTypes
   ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is CollectionTypes
   build-depends:       base
                      , myMonads
+                     , containers
   default-language:    Haskell2010
 
 executable Lense
   hs-source-dirs:      programs
   main-is:             Lenses.hs
-  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is Lense
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is Lenses
   build-depends:       base
                      , myMonads
   default-language:    Haskell2010
@@ -80,7 +81,7 @@ executable ArgParse
 executable ConcurProg
   hs-source-dirs:      programs
   main-is:             ConcurProg.hs
-  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is ConcurProg0
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is ConcurProg
   build-depends:       base
                      , myMonads
   default-language:    Haskell2010
@@ -91,6 +92,7 @@ executable DataText
   ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is DataText
   build-depends:       base
                      , myMonads
+                     , text
   default-language:    Haskell2010
 
 executable ErrorHandling

@@ -1,5 +1,5 @@
 module ErrorHandling
-    (
+    ( main
     ) where
 
 main :: IO ()

@@ -1,6 +1,7 @@
 module CollectionTypes where
 import Data.Map
-import Data.HashMap
+--import Data.HashMap
+--import Data.HashSet
 import Data.Set
 import Data.Sequence
 
