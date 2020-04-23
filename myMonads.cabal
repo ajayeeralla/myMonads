@@ -35,3 +35,68 @@ executable myMonads
   hs-source-dirs:     programs
   main-is:            Main.hs
   ghc-options:        -main-is Main -O2 -fno-warn-unused-do-bind
+
+executable FileOps
+  hs-source-dirs:      programs
+  main-is:             FileOps.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is FileOps
+  build-depends:       myMonads
+                     , base
+
+  default-language:    Haskell2010
+
+executable CollTypes
+  hs-source-dirs:      programs
+  main-is:             CollectionTypes.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is CollectionTypes
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable Lense
+  hs-source-dirs:      programs
+  main-is:             Lenses.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is Lense
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable Processes
+  hs-source-dirs:      programs
+  main-is:             Processes.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is Processes
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable ArgParse
+  hs-source-dirs:      programs
+  main-is:             ArgsParsing.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is ArgsParsing
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable ConcurProg
+  hs-source-dirs:      programs
+  main-is:             ConcurProg.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is ConcurProg0
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable DataText
+  hs-source-dirs:      programs
+  main-is:             DataText.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is DataText
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
+
+executable ErrorHandling
+  hs-source-dirs:      programs
+  main-is:             ErrorHandling.hs
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N -main-is ErrorHandling
+  build-depends:       base
+                     , myMonads
+  default-language:    Haskell2010
