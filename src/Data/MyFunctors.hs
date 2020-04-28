@@ -1,7 +1,7 @@
 {-# LANGUAGE GADTs #-}
 
 module Data.MyFunctors where
-import Data.Nat
+--import Data.Nat
 import Data.MyTypes
 
 -- | Define Functor instance for MyMaybe
