@@ -23,12 +23,12 @@ instance Applicative MyMaybe where
    Empty  *> _m2     = Empty
 
 -- | IList Applicative instance
-{-instance Functor (IList n) => Applicative (IList n) where
+instance Functor (Num n) => Applicative (IList n) where
    -- pure :: a -> (IList n a)
    --(<*>) :: IList n (a -> b) -> IList n a -> IList n b
    pure x = Cons x Nil :: IList 1 a
    (Cons g Nil) <*> (Cons x Nil) = Cons (g x) Nil
-   (Cons g gs) <*> (Cons x xs) = Cons (g x) (gs <*> xs) -}
+   (Cons g gs) <*> (Cons x xs) = Cons (g x) (gs <*> xs) 
 
 -- | Either instance
 {-instance Applicative (Either e) where
