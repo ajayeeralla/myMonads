@@ -21,9 +21,9 @@ library
   hs-source-dirs:    src
   exposed-modules:
     Data.MyTypes
-    Data.MyFunctors
-    Data.MyApplicatives
-    Data.MyMonads
+    --Data.MyFunctors
+    --Data.MyApplicatives
+    --Data.MyMonads
 
   build-depends:      base >= 4.8.2.0 && <5
                     , fin >= 0.1.1 && < 0.2
